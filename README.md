@@ -1,7 +1,9 @@
 # 🌀 3D Diffusion Profiling & Optimization 
 
 > Memory-Efficient Diffusion Models for 3D Images 
+
 > Author(s): Marouf Paul & Matthew Scanlon 
+
 > Environment: SSH-accessed GPU machine (4GB VRAM), PyTorch, Micromamba  
 
 ---
@@ -24,7 +26,6 @@ diffusion_toy/
 ├── results/               ← evaluation metrics (PSNR, SSIM, etc.)
 ├── scripts/               ← all training, sampling, and eval scripts
 │   ├── train_baseline.py          ← baseline full-timestep training
-│   ├── train_adaptive.py          ← adaptive timestep selection (SpeeD-style)
 │   ├── train_adaptive2.py         ← fixed top-K timestep training (precomputed)
 │   ├── compute_timestep_importance.py  ← computes which timesteps are most important
 │   ├── gen_synthetic.py           ← generates toy voxel sphere data
@@ -45,7 +46,7 @@ diffusion_toy/
 ### 📌 Baseline Profiling
 - Train a simple 3D diffusion model on voxelized spheres.
 - Use `torch.profiler` to measure memory usage and runtime bottlenecks.
-- Visualize the results in **TensorBoard**.
+- Visualize the results.
 
 ### 📌 Adaptive Timestep Allocation (Inspired by SpeeD)
 - Compute **gradient norms** for each diffusion timestep.
@@ -65,7 +66,7 @@ diffusion_toy/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/maroufpaul1/diffusion_toy.git
+git clone https://github.com/maroufpaul/diffusion_toy.git  
 cd diffusion_toy
 ```
 
@@ -116,21 +117,12 @@ Each is a `(64, 64, 64)` voxel grid.
 python scripts/train_baseline.py
 ```
 
-- Uses all timesteps from 0 to T (default 10).
+- Uses all timesteps from 0 to T (default 100).
 - Logs a trace to `profiling/baseline/`.
 - Use TensorBoard to view memory and time per operation.
 
-### ▶️ Adaptive Timestep Training (per-batch top-K)
 
-```bash
-python scripts/train_adaptive.py
-```
-
-- Computes gradient norms for all timesteps **on-the-fly**.
-- Selects top-K for each batch and only trains on those.
-- Logs to `profiling/adaptive/`.
-
-### ▶️ Fixed Adaptive Training (precomputed top-K)
+### ▶️ Adaptive Training (precomputed top-K)
 
 ```bash
 # First compute top-K timesteps
@@ -139,27 +131,6 @@ python scripts/compute_timestep_importance.py
 # Then train using fixed timesteps
 python scripts/train_adaptive2.py
 ```
-
----
-
-## 📊 Profiling & TensorBoard
-
-To visualize memory and performance traces:
-
-```bash
-tensorboard --logdir profiling --port 6006 --bind_all
-```
-
-Access via your browser (e.g. `http://YOUR_SSH_HOST:6006`).
-
-To fix visibility of traces:
-
-```bash
-mkdir -p profiling/baseline/<timestamp>/plugins/profile
-mv *.pt.trace.json profiling/baseline/<timestamp>/plugins/profile/
-```
-
-Repeat similarly for `adaptive/`.
 
 ---
 
@@ -217,12 +188,12 @@ The model is trained to **denoise** this `x_noisy` back to `x0`.
 
 ---
 
-## 🔍 What You Can Explore Next
+## 🔍 What TO Explore Next
 
 - Try different base shapes (e.g., cubes, combined primitives).
 - Use more realistic voxelized objects (e.g., from ShapeNet).
 - Implement full reverse sampling loop (e.g., DDPM).
-- Add `FID`, `LPIPS`, or `MMD/COV` evaluation if needed.
+- Add `FID`, `LPIPS`, or `MMD/COV` evaluation.
 
 ---
 
@@ -236,7 +207,7 @@ This project adapts ideas from:
 
 ## 🙏 Acknowledgments
 
-Special thanks to the course staff, Stability AI (original SD), and community examples from GitHub and papers.
+community examples from GitHub and papers.
 
 ---
 
