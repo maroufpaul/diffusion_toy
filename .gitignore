@@ -1,0 +1,12 @@
+# Ignore data, profiler logs, large outputs
+data/
+outputs/
+profiling/
+results/
+__pycache__/
+*.pt
+*.json
+*.npy
+*.trace.json
+*.bak
+
