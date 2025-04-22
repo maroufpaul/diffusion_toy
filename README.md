@@ -1,6 +1,6 @@
 # 🌀 3D Diffusion Profiling & Optimization 
 
->Memory-Efficient Diffusion Models for 3D Images 
+> Memory-Efficient Diffusion Models for 3D Images 
 > Author(s): Marouf Paul & Matthew Scanlon 
 > Environment: SSH-accessed GPU machine (4GB VRAM), PyTorch, Micromamba  
 
